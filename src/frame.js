@@ -12,9 +12,9 @@ import { frame } from './tokens.stylex.js';
 import { s } from './styles.js';
 
 const WORDS = {
-  da: { by: 'Lavet af Babak Bandpey', src: 'Kildekode', fd: 'Hent på F-Droid', home: 'Alle projekter' },
-  en: { by: 'Made by Babak Bandpey', src: 'Source code', fd: 'Get it on F-Droid', home: 'All projects' },
-  fa: { by: 'ساختهٔ بابک بندپی', src: 'کد منبع', fd: 'دریافت از F-Droid', home: 'همهٔ پروژه‌ها' },
+  da: { by: 'Lavet af Babak Bandpey', src: 'Kildekode', fd: 'Hent på F-Droid', home: 'Alle projekter', langs: 'Sprog' },
+  en: { by: 'Made by Babak Bandpey', src: 'Source code', fd: 'Get it on F-Droid', home: 'All projects', langs: 'Language' },
+  fa: { by: 'ساختهٔ بابک بندپی', src: 'کد منبع', fd: 'دریافت از F-Droid', home: 'همهٔ پروژه‌ها', langs: 'زبان' },
 };
 const NAMES = { da: 'Dansk', en: 'English', fa: 'فارسی', 'x-default': 'English' };
 
@@ -130,7 +130,7 @@ class Head extends Frame {
         'cocode', el('i', sx(s.dot), '.'), 'dk'),
       project && el('span', sx(s.here), project),
       el('span', sx(s.spacer)),
-      el('nav', { ...sx(s.links), 'aria-label': w.home }, ...extra, ...langs),
+      el('nav', { ...sx(s.links), 'aria-label': w.langs }, ...extra, ...langs),
     ), 'head');
   }
 }
