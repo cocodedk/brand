@@ -27,6 +27,7 @@ root only receives from the document.
 | `project` | name shown beside the wordmark |
 | `accent`, `on-accent` | the site's own colour |
 | `dark` | the site is dark; the frame reads light on it |
+| `max` | the site's column width (default `1240px`), so the frame lines up with it |
 | `lang` | `da`, `en` or `fa` (right to left); defaults to `<html lang>` |
 | `links` | extra head links, `"Download:#dl,Kilde:https://…"` |
 | `repo` | foot links to `github.com/<repo>` |

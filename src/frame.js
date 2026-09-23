@@ -53,7 +53,7 @@ const sx = (...styles) => {
 };
 
 class Frame extends HTMLElement {
-  static observedAttributes = ['project', 'accent', 'on-accent', 'dark', 'lang', 'links', 'repo', 'fdroid'];
+  static observedAttributes = ['project', 'accent', 'on-accent', 'dark', 'lang', 'links', 'repo', 'fdroid', 'max'];
 
   connectedCallback() {
     if (!this.shadowRoot) {
@@ -89,6 +89,8 @@ class Frame extends HTMLElement {
       ...(dark ? { bg: 'transparent', fg: '#F6EFE0', soft: '#B9B4A8', line: 'rgba(246,239,224,.28)' } : {}),
       ...(this.getAttribute('accent') ? { accent: this.getAttribute('accent') } : {}),
       ...(this.getAttribute('on-accent') ? { onAccent: this.getAttribute('on-accent') } : {}),
+      /* The site's own column width, so the frame's edges line up with the content under it. */
+      ...(this.getAttribute('max') ? { max: this.getAttribute('max') } : {}),
     };
     for (const [key, value] of Object.entries(values)) {
       const name = String(frame[key]).replace(/^var\(|\)$/g, '');
