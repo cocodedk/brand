@@ -17,27 +17,30 @@ export const s = stylex.create({
        that is how a site measures its column. */
     boxSizing: 'border-box', maxWidth: 'var(--cocode-max, 1240px)', marginInline: 'auto',
     paddingInline: 'var(--cocode-gutter, 20px)', paddingBlock: '10px',
-    display: 'flex', alignItems: 'center', gap: '16px', minHeight: '60px', flexWrap: 'wrap',
+    display: 'flex', alignItems: 'center', gap: { default: '16px', '@media (max-width: 560px)': '10px' }, minHeight: '60px', flexWrap: 'wrap',
   },
   footBar: { paddingBlock: '22px', fontSize: '1rem', gap: '8px 20px', minHeight: 0 },
   wordmark: {
-    fontFamily: type.serif, fontSize: '1.5rem', letterSpacing: '-.005em', color: 'inherit',
+    fontFamily: type.serif, fontSize: { default: '1.5rem', '@media (max-width: 560px)': '1.3rem' }, letterSpacing: '-.005em', color: 'inherit',
     textDecoration: 'none', display: 'inline-flex', alignItems: 'center', minHeight: '48px', whiteSpace: 'nowrap',
   },
   dot: { color: frame.accent, fontStyle: 'normal' },
   here: {
     fontFamily: type.smallCaps, fontWeight: 520, fontSize: '1rem', letterSpacing: '.075em',
     color: frame.soft, borderInlineStartStyle: 'solid', borderInlineStartWidth: '1px',
-    borderInlineStartColor: frame.line, paddingInlineStart: '16px',
+    borderInlineStartColor: frame.line, paddingInlineStart: { default: '16px', '@media (max-width: 560px)': '10px' },
   },
   spacer: { flexGrow: 1 },
   links: { display: 'flex', alignItems: 'center', gap: '2px', flexWrap: 'wrap' },
   link: {
     fontFamily: type.smallCaps, fontWeight: 520, letterSpacing: '.06em', fontSize: '.95rem',
     color: 'inherit', textDecoration: 'none', opacity: { default: 0.82, ':hover': 1 },
-    display: 'inline-flex', alignItems: 'center', minHeight: '44px', paddingInline: '10px',
+    display: 'inline-flex', alignItems: 'center', minHeight: '44px', paddingInline: { default: '10px', '@media (max-width: 560px)': '7px' },
   },
   linkHere: { opacity: 1, color: frame.accent },
+  /* On a phone the head has to fit one row: codes instead of names, and everything a little tighter. */
+  wide: { display: { default: 'inline', '@media (max-width: 560px)': 'none' } },
+  narrow: { display: { default: 'none', '@media (max-width: 560px)': 'inline' } },
   footLink: {
     color: 'inherit', textDecorationLine: 'underline', textDecorationThickness: '1px',
     textUnderlineOffset: '.25em', textDecorationColor: frame.line,
