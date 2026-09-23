@@ -122,7 +122,9 @@ class Head extends Frame {
     });
     const langs = this.alternates().map((a) =>
       el('a', { ...sx(s.link, a.code.startsWith(this.lang_) && s.linkHere), href: a.href, hreflang: a.code,
-        'aria-current': a.code.startsWith(this.lang_) ? 'true' : undefined }, NAMES[a.code] || a.code.toUpperCase()));
+        'aria-current': a.code.startsWith(this.lang_) ? 'true' : undefined, 'aria-label': NAMES[a.code] || a.code, lang: a.code },
+      /* Full names where there is room; on a phone the codes keep the head to one row. */
+      el('span', sx(s.wide), NAMES[a.code] || a.code.toUpperCase()), el('span', sx(s.narrow), a.code.slice(0, 2).toUpperCase())));
 
     this.paint(el('div', sx(s.bar),
       /* The wordmark is a name, so it stays left-to-right even on a Persian page. */
