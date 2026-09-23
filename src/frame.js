@@ -16,6 +16,8 @@ const WORDS = {
   en: { by: 'Made by Babak Bandpey', src: 'Source code', fd: 'Get it on F-Droid', home: 'All projects', langs: 'Language' },
   fa: { by: 'ساختهٔ بابک بندپی', src: 'کد منبع', fd: 'دریافت از F-Droid', home: 'همهٔ پروژه‌ها', langs: 'زبان' },
 };
+const year = (lang) => new Intl.DateTimeFormat(lang === 'fa' ? 'fa-IR-u-ca-persian' : lang, { year: 'numeric' })
+  .format(new Date()).replace(/[^\d۰-۹]/g, '');
 const NAMES = { da: 'Dansk', en: 'English', fa: 'فارسی', 'x-default': 'English' };
 
 /* One sheet, built once, adopted by every shadow root. The promise resolves once it has its rules,
@@ -147,7 +149,9 @@ class Foot extends Frame {
       el('span', sx(s.spacer)),
       repo && el('a', { ...sx(s.footLink), href: `https://github.com/${repo}` }, w.src),
       fdroid && el('a', { ...sx(s.footLink), href: `https://f-droid.org/packages/${fdroid}/` }, w.fd),
-      el('span', sx(s.quiet), `© ${new Date().getFullYear()} cocode.dk`),
+      /* The year in the page's own calendar and digits (۱۴۰۵ on a Persian page); the line is an
+         isolated left-to-right run so "© year cocode.dk" keeps its order inside right-to-left text. */
+      el('span', { ...sx(s.quiet), dir: 'ltr' }, `© ${year(this.lang_)} cocode.dk`),
     ), 'foot');
   }
 }
