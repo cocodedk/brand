@@ -5,7 +5,7 @@
   "description": "The cocode.dk family frame: <cocode-head> and <cocode-foot>, served at brand.cocode.dk",
   "license": "Apache-2.0",
   "scripts": {
-    "build": "rollup -c && cat src/fonts.css src/fallback.css dist/v1.css > dist/v1.tmp && mv dist/v1.tmp dist/v1.css && cp site/* dist/"
+    "build": "rollup -c && cat src/fonts.css src/fallback.css dist/v1.css > dist/v1.tmp && mv dist/v1.tmp dist/v1.css && cp site/* dist/ && node stamp.cjs"
   },
   "devDependencies": {
     "@rollup/plugin-node-resolve": "^16.0.3",
