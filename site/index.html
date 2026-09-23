@@ -1,0 +1,64 @@
+<!doctype html>
+<html lang="da">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>cocode.dk frame — every case</title>
+<!-- A page with translations: the head builds its switcher from these, not from an attribute. -->
+<link rel="alternate" hreflang="da" href="?da">
+<link rel="alternate" hreflang="en" href="?en">
+<link rel="alternate" hreflang="fa" href="?fa">
+<link rel="stylesheet" href="./v1.css">
+<script type="module" src="./v1.js"></script>
+<style>
+  body{margin:0;font:16px/1.5 system-ui;background:#fff;color:#222}
+  .case{margin:0 0 40px}
+  .case > h2{font:600 13px/1 ui-monospace,monospace;letter-spacing:.08em;text-transform:uppercase;
+    color:#777;margin:0;padding:10px 20px;background:#f3f3f3;border-top:1px solid #ddd}
+  .body{padding:26px 20px;font-size:15px}
+  .dark{background:#070d16;color:#dfe7f2}
+  .paper{background:#ECE2CF;color:#1D2130}
+</style>
+</head>
+<body>
+
+<div class="case"><h2>1 — light site, project name, extra links, three languages</h2>
+  <cocode-head project="Weather" accent="#2b6cb0" links="Download:#dl,Kilde:https://github.com/cocodedk/weather-android"><a href="https://cocode.dk">cocode.dk</a></cocode-head>
+  <div class="body paper">The site's own page. The frame never touches it.</div>
+  <cocode-foot project="Weather" repo="cocodedk/weather-android" fdroid="dk.cocode.weather"><a href="https://cocode.dk">Lavet af Babak</a></cocode-foot>
+</div>
+
+<div class="case"><h2>2 — dark site (Battleship), its own accent</h2>
+  <div class="dark">
+    <cocode-head project="Battleship" accent="#2de1fc" on-accent="#04121a" dark><a href="https://cocode.dk">cocode.dk</a></cocode-head>
+    <div class="body">A naval terminal, untouched. The frame reads light on top of it.</div>
+    <cocode-foot project="Battleship" repo="cocodedk/Battleship" dark><a href="https://cocode.dk">Lavet af Babak</a></cocode-foot>
+  </div>
+</div>
+
+<div class="case"><h2>3 — Persian, right to left</h2>
+  <cocode-head project="پرواز" accent="#c2410c" lang="fa"><a href="https://cocode.dk">cocode.dk</a></cocode-head>
+  <div class="body paper" dir="rtl">صفحهٔ خود سایت.</div>
+  <cocode-foot repo="cocodedk/parvaz" lang="fa"><a href="https://cocode.dk">ساختهٔ بابک</a></cocode-foot>
+</div>
+
+<div class="case"><h2>4 — no project name, no repo, no translations declared</h2>
+  <cocode-head><a href="https://cocode.dk">cocode.dk</a></cocode-head>
+  <div class="body paper">The minimum a site can pass.</div>
+  <cocode-foot><a href="https://cocode.dk">Lavet af Babak</a></cocode-foot>
+</div>
+
+<div class="case"><h2>5 — hostile CSS: the site styles a, nav, div aggressively</h2>
+  <style>
+    #hostile a{color:#f0f!important;font-size:28px!important;text-decoration:overline!important}
+    #hostile nav{display:block!important;background:#ff0!important;padding:40px!important}
+    #hostile div{border:4px dashed #f00!important}
+  </style>
+  <div id="hostile">
+    <cocode-head project="Hostile" accent="#0a7"><a href="https://cocode.dk">cocode.dk</a></cocode-head>
+    <div class="body paper">If the frame above still looks right, the shadow root is doing its job.</div>
+  </div>
+</div>
+
+</body>
+</html>
