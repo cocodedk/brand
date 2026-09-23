@@ -18,19 +18,22 @@ const WORDS = {
 };
 const NAMES = { da: 'Dansk', en: 'English', fa: 'فارسی', 'x-default': 'English' };
 
-/* One sheet, built once, adopted by every shadow root. Falls back to a <link> where
-   adoptedStyleSheets is missing (Safari before 16.4). */
+/* One sheet, built once, adopted by every shadow root. The promise resolves once it has its rules,
+   so no element draws itself unstyled. Where adoptedStyleSheets is missing (Safari before 16.4) a
+   <link> inside the shadow root does the job instead. */
 let sheet;
-function adopt(root, href) {
-  if (!('adoptedStyleSheets' in Document.prototype)) {
-    root.append(Object.assign(document.createElement('link'), { rel: 'stylesheet', href }));
-    return;
-  }
-  if (!sheet) {
+let sheetReady;
+function styled(href) {
+  if (!('adoptedStyleSheets' in Document.prototype)) return Promise.resolve();
+  if (!sheetReady) {
     sheet = new CSSStyleSheet();
-    fetch(href).then((r) => r.text()).then((css) => sheet.replaceSync(css)).catch(() => {});
+    sheetReady = fetch(href).then((r) => r.text()).then((css) => sheet.replaceSync(css)).catch(() => {});
   }
-  root.adoptedStyleSheets = [sheet];
+  return sheetReady;
+}
+function adopt(root, href) {
+  if (sheet) root.adoptedStyleSheets = [sheet];
+  else root.append(Object.assign(document.createElement('link'), { rel: 'stylesheet', href }));
 }
 
 /* The frame's stylesheet sits beside this module, whatever host it is served from. */
@@ -56,12 +59,15 @@ class Frame extends HTMLElement {
   static observedAttributes = ['project', 'accent', 'on-accent', 'dark', 'lang', 'links', 'repo', 'fdroid'];
 
   connectedCallback() {
-    if (!this.shadowRoot) {
-      /* The children stay in the light DOM as the no-JavaScript fallback; once a shadow root
-         exists they are simply no longer rendered. */
+    if (this.shadowRoot) { this.render(); return; }
+    /* The children stay in the light DOM as the no-JavaScript fallback; once a shadow root exists
+       they are no longer rendered. So the root is only attached once the styles are in, and until
+       then the visitor keeps seeing the fallback rather than an unstyled frame. */
+    styled(CSS_HREF).then(() => {
+      if (this.shadowRoot) return;
       adopt(this.attachShadow({ mode: 'open' }), CSS_HREF);
-    }
-    this.render();
+      this.render();
+    });
   }
 
   attributeChangedCallback() { if (this.shadowRoot) this.render(); }

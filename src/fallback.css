@@ -1,0 +1,8 @@
+/* Without JavaScript the elements never upgrade and their own children show instead. This keeps
+   those links on the site's column and in the site's colour rather than jammed in a corner. */
+cocode-head:not(:defined), cocode-foot:not(:defined) {
+  display: flex; flex-wrap: wrap; gap: 4px 16px; box-sizing: border-box;
+  max-width: var(--cocode-max, 1240px); margin-inline: auto; padding: 16px var(--cocode-gutter, 20px);
+  font-family: "Ysabeau Office", "Gill Sans", sans-serif;
+}
+cocode-head:not(:defined) a, cocode-foot:not(:defined) a { color: inherit; }
