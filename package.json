@@ -1,14 +1,12 @@
 {
-  "name": "brandkit",
+  "name": "cocode-brand",
   "version": "1.0.0",
-  "description": "",
-  "main": "index.js",
+  "private": true,
+  "description": "The cocode.dk family frame: <cocode-head> and <cocode-foot>, served at brand.cocode.dk",
+  "license": "Apache-2.0",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "build": "rollup -c && cat src/fonts.css dist/v1.css > dist/v1.tmp && mv dist/v1.tmp dist/v1.css && cp site/* dist/"
   },
-  "keywords": [],
-  "author": "",
-  "license": "ISC",
   "devDependencies": {
     "@rollup/plugin-node-resolve": "^16.0.3",
     "@stylexjs/rollup-plugin": "^0.19.1",

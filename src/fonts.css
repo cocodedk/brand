@@ -1,0 +1,7 @@
+/* The homepage's self-hosted fonts, loaded from cocode.dk (it serves them with CORS *), so a visitor
+   downloads them once for every site. Latin subset; SIL OFL 1.1, see cocode.dk/fonts/OFL.txt. */
+@font-face{font-family:'Ibarra Real Nova';font-style:normal;font-weight:400 700;font-display:swap;src:url(https://cocode.dk/fonts/ibarra-real-nova.woff2) format('woff2')}
+@font-face{font-family:'Ibarra Real Nova';font-style:italic;font-weight:400 700;font-display:swap;src:url(https://cocode.dk/fonts/ibarra-real-nova-italic.woff2) format('woff2')}
+@font-face{font-family:'Ysabeau Office';font-style:normal;font-weight:300 700;font-display:swap;src:url(https://cocode.dk/fonts/ysabeau-office.woff2) format('woff2')}
+@font-face{font-family:'Ysabeau Office';font-style:italic;font-weight:300 700;font-display:swap;src:url(https://cocode.dk/fonts/ysabeau-office-italic.woff2) format('woff2')}
+@font-face{font-family:'Ysabeau SC';font-style:normal;font-weight:400 700;font-display:swap;src:url(https://cocode.dk/fonts/ysabeau-sc.woff2) format('woff2')}
