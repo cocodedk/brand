@@ -11,7 +11,8 @@ export const s = stylex.create({
   head: { backgroundColor: frame.bg, borderBottomStyle: 'double', borderBottomWidth: '3px', borderBottomColor: frame.line },
   foot: { backgroundColor: frame.bg, borderTopStyle: 'double', borderTopWidth: '3px', borderTopColor: frame.line },
   bar: {
-    maxWidth: frame.max, marginInline: 'auto', paddingInline: frame.gutter, paddingBlock: '10px',
+    /* border-box, so `max` is the whole column as a site measures it, gutter included. */
+    boxSizing: 'border-box', maxWidth: frame.max, marginInline: 'auto', paddingInline: frame.gutter, paddingBlock: '10px',
     display: 'flex', alignItems: 'center', gap: '16px', minHeight: '60px', flexWrap: 'wrap',
   },
   footBar: { paddingBlock: '22px', fontSize: '1rem', gap: '8px 20px', minHeight: 0 },
