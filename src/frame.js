@@ -37,7 +37,7 @@ function adopt(root, href) {
 }
 
 /* The frame's stylesheet sits beside this module, whatever host it is served from. */
-const CSS_HREF = new URL('./v1.css', import.meta.url).href;
+const CSS_HREF = new URL('./v1.css?v=__CSS_VERSION__', import.meta.url).href;
 
 const el = (tag, attrs = {}, ...kids) => {
   const n = document.createElement(tag);
