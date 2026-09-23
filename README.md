@@ -27,11 +27,17 @@ root only receives from the document.
 | `project` | name shown beside the wordmark |
 | `accent`, `on-accent` | the site's own colour |
 | `dark` | the site is dark; the frame reads light on it |
-| `max` | the site's column width (default `1240px`), so the frame lines up with it |
 | `lang` | `da`, `en` or `fa` (right to left); defaults to `<html lang>` |
 | `links` | extra head links, `"Download:#dl,Kilde:https://…"` |
 | `repo` | foot links to `github.com/<repo>` |
 | `fdroid` | foot links to the F-Droid page for that app id, once it is published |
+
+To line the frame up with the site's column, set two properties from the site's own CSS, media
+queries included:
+
+```css
+cocode-head, cocode-foot { --cocode-max: 1080px; --cocode-gutter: 20px; }   /* defaults 1240px, 20px */
+```
 
 The language switch is not an attribute: the head reads the page's
 `<link rel="alternate" hreflang>` tags and builds the switcher from them.

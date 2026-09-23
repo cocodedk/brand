@@ -28,6 +28,4 @@ export const frame = stylex.defineVars({
   fg: '#1D2130',
   soft: '#4A4639',
   line: '#C8BCA4',
-  gutter: '20px',
-  max: '1240px',
 });

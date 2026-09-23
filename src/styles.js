@@ -11,8 +11,12 @@ export const s = stylex.create({
   head: { backgroundColor: frame.bg, borderBottomStyle: 'double', borderBottomWidth: '3px', borderBottomColor: frame.line },
   foot: { backgroundColor: frame.bg, borderTopStyle: 'double', borderTopWidth: '3px', borderTopColor: frame.line },
   bar: {
-    /* border-box, so `max` is the whole column as a site measures it, gutter included. */
-    boxSizing: 'border-box', maxWidth: frame.max, marginInline: 'auto', paddingInline: frame.gutter, paddingBlock: '10px',
+    /* The site's column, so the frame's edges line up with the content under it. These are plain
+       custom properties, not StyleX variables: they are read here, inside the shadow root, so a site
+       can set them on the elements and change them in its own media queries. border-box, because
+       that is how a site measures its column. */
+    boxSizing: 'border-box', maxWidth: 'var(--cocode-max, 1240px)', marginInline: 'auto',
+    paddingInline: 'var(--cocode-gutter, 20px)', paddingBlock: '10px',
     display: 'flex', alignItems: 'center', gap: '16px', minHeight: '60px', flexWrap: 'wrap',
   },
   footBar: { paddingBlock: '22px', fontSize: '1rem', gap: '8px 20px', minHeight: 0 },
