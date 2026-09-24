@@ -18,6 +18,17 @@ const WORDS = {
 };
 const year = (lang) => new Intl.DateTimeFormat(lang === 'fa' ? 'fa-IR-u-ca-persian' : lang, { year: 'numeric' })
   .format(new Date()).replace(/[^\d۰-۹]/g, '');
+const SCHEME = window.matchMedia('(prefers-color-scheme: dark)');
+SCHEME.addEventListener?.('change', () => document.querySelectorAll('cocode-head[dark=auto], cocode-foot[dark=auto]')
+  .forEach((e) => e.shadowRoot && e.render()));
+/* A page's own header or footer counts as its banner or contentinfo unless it sits inside
+   sectioning content; an explicit role counts too. */
+const landmark = (kind) => {
+  const [tag, role] = kind === 'head' ? ['header', 'banner'] : ['footer', 'contentinfo'];
+  const taken = document.querySelector(`[role=${role}]`) ||
+    [...document.querySelectorAll(tag)].some((x) => !x.closest('article,aside,main,nav,section'));
+  return taken ? 'div' : tag;
+};
 const NAMES = { da: 'Dansk', en: 'English', fa: 'فارسی', ja: '日本語', 'x-default': 'English' };
 
 /* One sheet, built once, adopted by every shadow root. The promise resolves once it has its rules,
@@ -92,9 +103,11 @@ class Frame extends HTMLElement {
      - a StyleX variable reads as "var(--cd-xxxx)"; the property to set is the name inside it
      - setProperty is required: assigning to element.style ignores custom properties */
   theme() {
-    const dark = this.hasAttribute('dark');
+    /* dark="auto" follows the visitor's colour scheme, for sites that restyle themselves in dark mode. */
+    const dark = this.getAttribute('dark') === 'auto' ? SCHEME.matches : this.hasAttribute('dark');
+    for (const key of ['fg', 'soft', 'line']) this.style.removeProperty(String(frame[key]).replace(/^var\(|\)$/g, ''));
     const values = {
-      ...(dark ? { bg: 'transparent', fg: '#F6EFE0', soft: '#B9B4A8', line: 'rgba(246,239,224,.28)' } : {}),
+      ...(dark ? { fg: '#F6EFE0', soft: '#B9B4A8', line: 'rgba(246,239,224,.28)' } : {}),
       ...(this.getAttribute('accent') ? { accent: this.getAttribute('accent') } : {}),
       ...(this.getAttribute('on-accent') ? { onAccent: this.getAttribute('on-accent') } : {}),
     };
@@ -110,9 +123,9 @@ class Frame extends HTMLElement {
     Object.assign(this.style, host.style);
     this.theme();
     this.setAttribute('dir', this.lang_ === 'fa' ? 'rtl' : 'ltr');
-    /* <header> and <footer> make the frame a banner and a contentinfo landmark, so its links are
-       not orphaned outside every landmark. */
-    this.shadowRoot.replaceChildren(el(kind === 'head' ? 'header' : 'footer', sx(kind === 'head' ? s.head : s.foot), inner));
+    /* <header> and <footer> make the frame the page's banner and contentinfo landmarks — unless the
+       page already has its own, since two of either confuse screen readers and fail axe. */
+    this.shadowRoot.replaceChildren(el(landmark(kind), sx(kind === 'head' ? s.head : s.foot), inner));
   }
 }
 
