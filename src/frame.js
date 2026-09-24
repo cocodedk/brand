@@ -18,7 +18,7 @@ const WORDS = {
 };
 const year = (lang) => new Intl.DateTimeFormat(lang === 'fa' ? 'fa-IR-u-ca-persian' : lang, { year: 'numeric' })
   .format(new Date()).replace(/[^\d۰-۹]/g, '');
-const NAMES = { da: 'Dansk', en: 'English', fa: 'فارسی', 'x-default': 'English' };
+const NAMES = { da: 'Dansk', en: 'English', fa: 'فارسی', ja: '日本語', 'x-default': 'English' };
 
 /* One sheet, built once, adopted by every shadow root. The promise resolves once it has its rules,
    so no element draws itself unstyled. Where adoptedStyleSheets is missing (Safari before 16.4) a
@@ -74,10 +74,10 @@ class Frame extends HTMLElement {
 
   attributeChangedCallback() { if (this.shadowRoot) this.render(); }
 
-  get lang_() {
-    const l = this.getAttribute('lang') || document.documentElement.lang || 'en';
-    return WORDS[l.slice(0, 2)] ? l.slice(0, 2) : 'en';
-  }
+  /* The page's own language, which marks the current link in the switch… */
+  get page_() { return (this.getAttribute('lang') || document.documentElement.lang || 'en').slice(0, 2); }
+  /* …and the language the frame's words are in, English where it has none (a Japanese page). */
+  get lang_() { return WORDS[this.page_] ? this.page_ : 'en'; }
 
   /* The language switch is not an attribute: it differs per page, and the page already says what
      its translations are, in <link rel="alternate" hreflang>. Read it from there or show nothing. */
@@ -110,7 +110,9 @@ class Frame extends HTMLElement {
     Object.assign(this.style, host.style);
     this.theme();
     this.setAttribute('dir', this.lang_ === 'fa' ? 'rtl' : 'ltr');
-    this.shadowRoot.replaceChildren(el('div', sx(kind === 'head' ? s.head : s.foot), inner));
+    /* <header> and <footer> make the frame a banner and a contentinfo landmark, so its links are
+       not orphaned outside every landmark. */
+    this.shadowRoot.replaceChildren(el(kind === 'head' ? 'header' : 'footer', sx(kind === 'head' ? s.head : s.foot), inner));
   }
 }
 
@@ -123,8 +125,8 @@ class Head extends Frame {
       return el('a', { ...sx(s.link), href: href?.trim() }, label?.trim());
     });
     const langs = this.alternates().map((a) =>
-      el('a', { ...sx(s.link, a.code.startsWith(this.lang_) && s.linkHere), href: a.href, hreflang: a.code,
-        'aria-current': a.code.startsWith(this.lang_) ? 'true' : undefined, 'aria-label': NAMES[a.code] || a.code, lang: a.code },
+      el('a', { ...sx(s.link, a.code.startsWith(this.page_) && s.linkHere), href: a.href, hreflang: a.code,
+        'aria-current': a.code.startsWith(this.page_) ? 'true' : undefined, 'aria-label': NAMES[a.code] || a.code, lang: a.code },
       /* Full names where there is room; on a phone the codes keep the head to one row. */
       el('span', sx(s.wide), NAMES[a.code] || a.code.toUpperCase()), el('span', sx(s.narrow), a.code.slice(0, 2).toUpperCase())));
 
