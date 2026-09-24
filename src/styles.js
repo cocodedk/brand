@@ -16,8 +16,9 @@ export const s = stylex.create({
        can set them on the elements and change them in its own media queries. border-box, because
        that is how a site measures its column. */
     boxSizing: 'border-box', maxWidth: 'var(--cocode-max, 1240px)', marginInline: 'auto',
-    paddingInline: 'var(--cocode-gutter, 20px)', paddingBlock: '10px',
-    display: 'flex', alignItems: 'center', gap: { default: '16px', '@media (max-width: 560px)': '10px' }, minHeight: '60px', flexWrap: 'wrap',
+    /* Slimmer on a phone, where every row of the app below it counts; tap targets stay 44px+. */
+    paddingInline: 'var(--cocode-gutter, 20px)', paddingBlock: { default: '10px', '@media (max-width: 560px)': '2px' },
+    display: 'flex', alignItems: 'center', gap: { default: '16px', '@media (max-width: 560px)': '10px' }, minHeight: { default: '60px', '@media (max-width: 560px)': '48px' }, flexWrap: 'wrap',
   },
   footBar: { paddingBlock: '10px', fontSize: '1rem', gap: '8px 20px', minHeight: 0 },
   wordmark: {
