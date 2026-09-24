@@ -24,7 +24,8 @@ export const frame = stylex.defineVars({
   accent: '#233E8B',
   onAccent: '#F6EFE0',
   /* What the frame paints with; a dark site flips these through the `dark` attribute. */
-  bg: '#ECE2CF',
+  /* Transparent, like the dark variant: the frame takes the site's own background, light or dark. */
+  bg: 'transparent',
   fg: '#1D2130',
   soft: '#4A4639',
   line: '#C8BCA4',
