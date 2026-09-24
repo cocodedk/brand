@@ -28,5 +28,6 @@ export const frame = stylex.defineVars({
   bg: 'transparent',
   fg: '#1D2130',
   soft: '#4A4639',
-  line: '#C8BCA4',
+  /* The ink at low opacity rather than the homepage's warm rule, so it suits any light site. */
+  line: 'rgba(29,33,48,.2)',
 });
