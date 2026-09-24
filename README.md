@@ -26,7 +26,7 @@ root only receives from the document.
 |---|---|
 | `project` | name shown beside the wordmark |
 | `accent`, `on-accent` | the site's own colour |
-| `dark` | the site is dark; the frame reads light on it |
+| `dark` | the site is dark; the frame reads light on it. `dark="auto"` follows the visitor's colour scheme |
 | `lang` | `da`, `en` or `fa` (right to left); defaults to `<html lang>` |
 | `links` | extra head links, `"Download:#dl,Kilde:https://…"` |
 | `repo` | foot links to `github.com/<repo>` |
