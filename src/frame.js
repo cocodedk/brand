@@ -136,7 +136,11 @@ class Head extends Frame {
         'cocode', el('i', sx(s.dot), '.'), 'dk'),
       project && el('span', sx(s.here), project),
       el('span', sx(s.spacer)),
-      el('nav', { ...sx(s.links), 'aria-label': w.langs }, ...extra, ...langs),
+      /* Two landmarks, each named for what it holds: the site's own links under its project name,
+         the language switch as "Language". An empty one is left out rather than announced. */
+      el('div', sx(s.links),
+        extra.length > 0 && el('nav', { ...sx(s.links), 'aria-label': project || w.home }, ...extra),
+        langs.length > 0 && el('nav', { ...sx(s.links), 'aria-label': w.langs }, ...langs)),
     ), 'head');
   }
 }
