@@ -19,7 +19,7 @@ export const s = stylex.create({
     paddingInline: 'var(--cocode-gutter, 20px)', paddingBlock: '10px',
     display: 'flex', alignItems: 'center', gap: { default: '16px', '@media (max-width: 560px)': '10px' }, minHeight: '60px', flexWrap: 'wrap',
   },
-  footBar: { paddingBlock: '22px', fontSize: '1rem', gap: '8px 20px', minHeight: 0 },
+  footBar: { paddingBlock: '10px', fontSize: '1rem', gap: '8px 20px', minHeight: 0 },
   wordmark: {
     fontFamily: type.serif, fontSize: { default: '1.5rem', '@media (max-width: 560px)': '1.3rem' }, letterSpacing: '-.005em', color: 'inherit',
     textDecoration: 'none', display: 'inline-flex', alignItems: 'center', minHeight: '48px', whiteSpace: 'nowrap',
@@ -42,6 +42,8 @@ export const s = stylex.create({
   wide: { display: { default: 'inline', '@media (max-width: 560px)': 'none' } },
   narrow: { display: { default: 'none', '@media (max-width: 560px)': 'inline' } },
   footLink: {
+    /* A 44px tap target, like the head's links; the bar's own padding shrank to match. */
+    display: 'inline-flex', alignItems: 'center', minHeight: '44px',
     color: 'inherit', textDecorationLine: 'underline', textDecorationThickness: '1px',
     textUnderlineOffset: '.25em', textDecorationColor: frame.line,
   },
