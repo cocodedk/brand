@@ -19,8 +19,18 @@ const WORDS = {
 const year = (lang) => new Intl.DateTimeFormat(lang === 'fa' ? 'fa-IR-u-ca-persian' : lang, { year: 'numeric' })
   .format(new Date()).replace(/[^\d۰-۹]/g, '');
 const SCHEME = window.matchMedia('(prefers-color-scheme: dark)');
-SCHEME.addEventListener?.('change', () => document.querySelectorAll('cocode-head[dark=auto], cocode-foot[dark=auto]')
-  .forEach((e) => e.shadowRoot && e.render()));
+/* dark="auto" follows the page's own color-scheme when it declares one — a site's light/dark
+   toggle sets it — and the visitor's preference when it doesn't. */
+const pageIsDark = () => {
+  const cs = getComputedStyle(document.documentElement).colorScheme;
+  const dark = /\bdark\b/.test(cs), light = /\blight\b/.test(cs);
+  return dark !== light ? dark : SCHEME.matches;
+};
+const rerenderAuto = () => document.querySelectorAll('cocode-head[dark=auto], cocode-foot[dark=auto]')
+  .forEach((e) => e.shadowRoot && e.render());
+SCHEME.addEventListener?.('change', rerenderAuto);
+new MutationObserver(rerenderAuto).observe(document.documentElement,
+  { attributes: true, attributeFilter: ['class', 'style', 'data-theme', 'data-color-scheme', 'data-mode'] });
 /* A page's own header or footer counts as its banner or contentinfo unless it sits inside
    sectioning content; an explicit role counts too. */
 const landmark = (kind) => {
@@ -103,8 +113,7 @@ class Frame extends HTMLElement {
      - a StyleX variable reads as "var(--cd-xxxx)"; the property to set is the name inside it
      - setProperty is required: assigning to element.style ignores custom properties */
   theme() {
-    /* dark="auto" follows the visitor's colour scheme, for sites that restyle themselves in dark mode. */
-    const dark = this.getAttribute('dark') === 'auto' ? SCHEME.matches : this.hasAttribute('dark');
+    const dark = this.getAttribute('dark') === 'auto' ? pageIsDark() : this.hasAttribute('dark');
     for (const key of ['fg', 'soft', 'line']) this.style.removeProperty(String(frame[key]).replace(/^var\(|\)$/g, ''));
     const values = {
       ...(dark ? { fg: '#F6EFE0', soft: '#B9B4A8', line: 'rgba(246,239,224,.28)' } : {}),
