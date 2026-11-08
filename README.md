@@ -27,7 +27,7 @@ root only receives from the document.
 | `project` | name shown beside the wordmark |
 | `accent`, `on-accent` | the site's own colour |
 | `dark` | the site is dark; the frame reads light on it. `dark="auto"` follows the page's own `color-scheme` (set by a site's light/dark toggle), else the visitor's preference |
-| `lang` | `da`, `en` or `fa` (right to left); defaults to `<html lang>` |
+| `lang` | `da`, `en`, `es` or `fa` (right to left); defaults to `<html lang>` |
 | `links` | extra head links, `"Download:#dl,Kilde:https://…"` |
 | `repo` | foot links to `github.com/<repo>` |
 | `fdroid` | foot links to the F-Droid page for that app id, once it is published |

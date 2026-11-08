@@ -14,6 +14,7 @@ import { s } from './styles.js';
 const WORDS = {
   da: { by: 'Lavet af Babak Bandpey', src: 'Kildekode', fd: 'Hent på F-Droid', home: 'Alle projekter', langs: 'Sprog' },
   en: { by: 'Made by Babak Bandpey', src: 'Source code', fd: 'Get it on F-Droid', home: 'All projects', langs: 'Language' },
+  es: { by: 'Hecho por Babak Bandpey', src: 'Código fuente', fd: 'Disponible en F-Droid', home: 'Todos los proyectos', langs: 'Idioma' },
   fa: { by: 'ساختهٔ بابک بندپی', src: 'کد منبع', fd: 'دریافت از F-Droid', home: 'همهٔ پروژه‌ها', langs: 'زبان' },
 };
 const year = (lang) => new Intl.DateTimeFormat(lang === 'fa' ? 'fa-IR-u-ca-persian' : lang, { year: 'numeric' })
@@ -39,7 +40,7 @@ const landmark = (kind) => {
     [...document.querySelectorAll(tag)].some((x) => !x.closest('article,aside,main,nav,section'));
   return taken ? 'div' : tag;
 };
-const NAMES = { da: 'Dansk', en: 'English', fa: 'فارسی', ja: '日本語', 'x-default': 'English' };
+const NAMES = { da: 'Dansk', en: 'English', es: 'Español', fa: 'فارسی', ja: '日本語', 'x-default': 'English' };
 
 /* One sheet, built once, adopted by every shadow root. The promise resolves once it has its rules,
    so no element draws itself unstyled. Where adoptedStyleSheets is missing (Safari before 16.4) a
